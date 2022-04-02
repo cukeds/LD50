@@ -1,10 +1,8 @@
-import sys
 import sdl2 as sdl
 import sdl2.ext as ext
-import controller
 
-from world import World
-from player import Player
+from src.world import World
+from src.player import Player
 
 RESOURCES = ext.Resources(__file__, "res")
 
@@ -24,7 +22,7 @@ def run():
 
     world = World(window)
 
-    player = Player(world, sprite, 0, 0)
+    player = Player(world, sprite)
 
     while running:
 
@@ -40,7 +38,6 @@ def run():
                 player.controller.handle_keyup(event.key)
 
         player.update()
-
         world.process()
 
 

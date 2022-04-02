@@ -1,6 +1,6 @@
 import sdl2.ext as ext
-from renderer import Renderer
-from movement import MovementSystem
+from src.renderer import Renderer
+from src.movement import MovementSystem
 
 
 class World(ext.World):
