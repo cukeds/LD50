@@ -3,7 +3,7 @@ from src import actor, controller
 
 class Player(actor.Actor):
     def __init__(self, world, sprite):
-        super(Player, self).__init__(world, sprite, vmax=1)
+        super(Player, self).__init__(world, sprite, vmax=2)
         self.controller = controller.Controller()
 
     def update(self):
