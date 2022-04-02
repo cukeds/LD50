@@ -1,10 +1,16 @@
 import actor
 import controller
+from sdl2.ext import Entity
+from movement import Velocity
 
 
-class Player(actor.Actor):
+class Player(Entity):
     def __init__(self, world, sprite, pos_x, pos_y):
-        super().__init__(world, pos_x, pos_y, sprite)
+        #super(Player, self).__init__(world, pos_x, pos_y, sprite)
+        self.x = pos_x
+        self.y = pos_y
+        self.sprite = sprite
+        self.velocity = Velocity(1)
         self.controller = controller.Controller()
 
     def update(self):
@@ -17,3 +23,5 @@ class Player(actor.Actor):
             self.velocity.vy += 1
         elif self.controller.down:
             self.velocity.vy -= 1
+
+        print(self.vmax)
