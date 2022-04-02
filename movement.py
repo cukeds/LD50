@@ -12,6 +12,7 @@ class MovementSystem(Applicator):
             sprite.y += velocity.vy
 
 
+
 class Velocity:
     def __init__(self, vmax):
         self.vx = 0

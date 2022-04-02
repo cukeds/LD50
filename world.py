@@ -1,3 +1,4 @@
+from sdl2 import SDL_Delay
 import sdl2.ext as ext
 from renderer import Renderer
 from movement import MovementSystem
@@ -11,3 +12,7 @@ class World(ext.World):
 
         self.add_system(self.renderer)
         self.add_system(self.movement_system)
+
+    def update(self):
+        SDL_Delay(10)
+        self.process()

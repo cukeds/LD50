@@ -1,13 +1,14 @@
 import sdl2 as sdl
 import sdl2.ext as ext
-
 from world import World
 from player import Player
+from config import *
 
 RESOURCES = ext.Resources(__file__, "res")
 
+
 ext.init()
-window = ext.Window("Test", size=(800, 600))
+window = ext.Window("Test", size=(WIDTH, HEIGHT))
 
 factory = ext.SpriteFactory(ext.SOFTWARE)
 spriterenderer = factory.create_sprite_render_system(window)
@@ -37,8 +38,9 @@ def run():
             if event.type == sdl.SDL_KEYUP:
                 player.controller.handle_keyup(event.key)
 
+
         player.update()
-        world.process()
+        world.update()
 
 
 if __name__ == "__main__":

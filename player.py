@@ -4,7 +4,7 @@ import controller
 
 class Player(actor.Actor):
     def __init__(self, world, sprite):
-        super(Player, self).__init__(world, sprite, vmax=2)
+        super(Player, self).__init__(world, sprite, vmax=1)
         self.controller = controller.Controller()
 
     def update(self):
