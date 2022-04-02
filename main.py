@@ -11,16 +11,12 @@ ext.init()
 window = ext.Window("Test", size=(WIDTH, HEIGHT))
 
 factory = ext.SpriteFactory(ext.SOFTWARE)
-spriterenderer = factory.create_sprite_render_system(window)
-
 
 def run():
     window.show()
     running = True
 
     sprite = factory.from_image(RESOURCES.get_path("player.png"))
-    spriterenderer.render(sprite)
-
     world = World(window)
 
     player = Player(world, sprite)
