@@ -1,2 +1,7 @@
 WIDTH = 800
 HEIGHT = 600
+
+PUP = 2
+PDOWN = 0
+PLEFT = 1
+PRIGHT = 3

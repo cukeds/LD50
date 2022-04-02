@@ -8,22 +8,27 @@ RESOURCES = ext.Resources(__file__, "res")
 
 
 ext.init()
-window = ext.Window("Test", size=(WIDTH, HEIGHT))
 
-factory = ext.SpriteFactory(ext.SOFTWARE)
-spriterenderer = factory.create_sprite_render_system(window)
+def load(factory):
+    sprite_names = ["player_down.png", "player_left.png", "player_up.png", "player_right.png"]
+    sprites = []
+    for sprite in sprite_names:
+        sprites.append(factory.from_image(RESOURCES.get_path(sprite)))
 
+    return sprites
 
 def run():
+    window = ext.Window("Test", size=(WIDTH, HEIGHT))
+    factory = ext.SpriteFactory(ext.SOFTWARE)
     window.show()
     running = True
 
-    sprite = factory.from_image(RESOURCES.get_path("player.png"))
-    spriterenderer.render(sprite)
+    sprites = load(factory)
+
 
     world = World(window)
 
-    player = Player(world, sprite)
+    player = Player(world, sprites[0])
 
     while running:
 
@@ -39,6 +44,14 @@ def run():
                 player.controller.handle_keyup(event.key)
 
 
+        if player.controller.up:
+            player.sprite = sprites[PUP]
+        elif player.controller.down:
+            player.sprite = sprites[PDOWN]
+        if player.controller.left:
+            player.sprite = sprites[PLEFT]
+        elif player.controller.right:
+            player.sprite = sprites[PRIGHT]
         player.update()
         world.update()
 
