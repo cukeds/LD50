@@ -1,4 +1,5 @@
-from src import actor, controller
+import actor
+import controller
 
 
 class Player(actor.Actor):

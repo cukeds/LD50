@@ -2,4 +2,4 @@ venv/*
 LD50/*
 .idea/*
 __pycache__/*
-src/main.py
+main.py
