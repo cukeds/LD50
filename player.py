@@ -3,8 +3,8 @@ import controller
 
 
 class Player(actor.Actor):
-    def __init__(self, world, sprite):
-        super(Player, self).__init__(world, sprite, vmax=1)
+    def __init__(self, world, sprites):
+        super(Player, self).__init__(world, sprites, vmax=1)
         self.controller = controller.Controller()
 
     def update(self):

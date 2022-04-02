@@ -1,15 +1,15 @@
-from sdl2.ext import Applicator, Sprite
+from sdl2.ext import Applicator
 
 
 class MovementSystem(Applicator):
     def __init__(self):
         super(MovementSystem, self).__init__()
-        self.componenttypes = Velocity, Sprite
+        self.componenttypes = Position, Velocity
 
     def process(self, world, component_sets):
-        for velocity, sprite in component_sets:
-            sprite.x += velocity.vx
-            sprite.y += velocity.vy
+        for position, velocity in component_sets:
+            position.x += velocity.vx
+            position.y += velocity.vy
 
 
 class Position:
