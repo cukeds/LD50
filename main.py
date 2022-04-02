@@ -3,6 +3,9 @@ import sdl2 as sdl
 import sdl2.ext as ext
 import controller
 
+from world import World
+from player import Player
+
 RESOURCES = ext.Resources(__file__, "res")
 
 ext.init()
@@ -19,7 +22,9 @@ def run():
     sprite = factory.from_image(RESOURCES.get_path("player.png"))
     spriterenderer.render(sprite)
 
-    Controller = controller.Controller()
+    world = World(window)
+
+    player = Player(world, sprite, 0, 0)
 
     while running:
 
@@ -30,9 +35,12 @@ def run():
             if event.type == sdl.SDL_QUIT:
                 running = False
             if event.type == sdl.SDL_KEYDOWN:
-                Controller.handle_keydown(event.key)
+                player.controller.handle_keydown(event.key)
+                print(player.controller)
             if event.type == sdl.SDL_KEYUP:
-                Controller.handle_keyup(event.key)
+                player.controller.handle_keyup(event.key)
+
+        world.process()
 
 
 if __name__ == "__main__":
