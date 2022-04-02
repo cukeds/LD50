@@ -36,3 +36,5 @@ class Controller:
             self.up = True
         elif event.keysym.sym == self._down_key:
             self.down = True
+
+

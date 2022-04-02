@@ -36,9 +36,10 @@ def run():
                 running = False
             if event.type == sdl.SDL_KEYDOWN:
                 player.controller.handle_keydown(event.key)
-                print(player.controller)
             if event.type == sdl.SDL_KEYUP:
                 player.controller.handle_keyup(event.key)
+
+        player.update()
 
         world.process()
 
