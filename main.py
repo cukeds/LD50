@@ -24,7 +24,7 @@ def run():
 
     world = World(window)
 
-    player = Player(world, sprite, 0, 0)
+    player = Player(world, sprite)
 
     while running:
 
@@ -40,7 +40,6 @@ def run():
                 player.controller.handle_keyup(event.key)
 
         player.update()
-
         world.process()
 
 
