@@ -13,6 +13,10 @@ class MovementSystem(Applicator):
 
 
 class Velocity:
-    def __init__(self):
+    def __init__(self, vmax):
         self.vx = 0
         self.vy = 0
+        self.vmax = vmax
+
+    def __repr__(self):
+        return f"({self.vx}, {self.vy})"
