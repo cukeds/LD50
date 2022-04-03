@@ -59,10 +59,14 @@ class ControllerV2:
                             "with modulus 1) as arguments.")
 
     def handle_keyup(self, event):
-        if event.keysym.sym == self._left_key or event.keysym.sym == self._right_key:
+        if event.keysym.sym == self._left_key:
+            self.x = 0
+        if event.keysym.sym == self._right_key:
             self.x = 0
 
-        if event.keysym.sym == self._up_key or event.keysym.sym == self._down_key:
+        if event.keysym.sym == self._up_key:
+            self.y = 0
+        elif event.keysym.sym == self._down_key:
             self.y = 0
 
     def handle_keydown(self, event):

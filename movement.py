@@ -16,18 +16,18 @@ class MovementSystem(Applicator):
 
 
 class Position:
-    def __init__(self):
-        self.x = 0
-        self.y = 0
+    def __init__(self, x=0, y=0):
+        self.x = x
+        self.y = y
 
     def __repr__(self):
         return f"({self.x}, {self.y})"
 
 
 class Velocity:
-    def __init__(self, vmax):
-        self.vx = 0
-        self.vy = 0
+    def __init__(self, vmax, vx=0, vy=0):
+        self.vx = vx
+        self.vy = vy
         self.vmax = vmax
 
     def __repr__(self):

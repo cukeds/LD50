@@ -26,7 +26,7 @@ class Game:
 
     def _load_sprites(self):
         self.sprites = {}
-        sprite_names = ["player_down.png", "player_left.png", "player_up.png", "player_right.png"]
+        sprite_names = ["player_down.png", "player_left.png", "player_up.png", "player_right.png", "test_proj.png"]
         sprites = []
         for sprite in sprite_names:
             sprites.append(self.sprite_factory.from_image(self.RES.get_path(sprite)))
@@ -37,8 +37,8 @@ class Game:
     def run(self):
         running = True
         self.window.show()
-        Enemy(self.world, self.sprites["enemy"], AGG)
-        controller = ControllerV2(self.player)
+        Enemy(self.world, self.sprites["enemy"], AGG, 300, 300)
+        # controller = ControllerV2(self.player)
         while running:
             self.window.refresh()
 
@@ -50,10 +50,10 @@ class Game:
                     if event.key.keysym.sym == sdl.SDLK_c and event.key.keysym.mod & sdl.KMOD_CTRL:
                         running = False
                         break
-                    controller.handle_keydown(event.key)
+                    self.player.controller.handle_keydown(event.key)
                 if event.type == sdl.SDL_KEYUP:
-                    controller.handle_keyup(event.key)
+                    self.player.controller.handle_keyup(event.key)
 
-            controller.update()
+            self.player.update()
 
             self.world.update()
