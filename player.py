@@ -1,11 +1,11 @@
-import actor
-import controller
+from actor import Actor
+from controller import Controller
 
 
-class Player(actor.Actor):
-    def __init__(self, world, sprites):
+class Player(Actor):
+    def __init__(self, world, sprites, controller=None):
         super(Player, self).__init__(world, sprites, vmax=1)
-        self.controller = controller.Controller()
+        self.controller = controller or Controller()
 
     def update(self):
         if self.controller.right:
