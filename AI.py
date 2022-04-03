@@ -16,7 +16,7 @@ class AISystem(Applicator):
             if ai.category == AGG:
                 if distance(position.x, position.y, self.player.position.x, self.player.position.y) > 50:
                     dirx = 1 if position.x < self.player.position.x else -1
-                    diry = -1 if position.y < self.player.position.y else 1
+                    diry = 1 if position.y < self.player.position.y else -1
 
                     velocity.vx = 3 * dirx
                     velocity.vy = 3 * diry

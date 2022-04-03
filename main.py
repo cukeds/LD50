@@ -1,15 +1,15 @@
 import sdl2 as sdl
 import sdl2.ext as ext
 from world import World
-from player import Player
 from config import *
+from enemy import Enemy
 
 RESOURCES = ext.Resources(__file__, "res")
 
 
 ext.init()
 def load(factory):
-    sprite_names = ["player_down.png", "player_left.png", "player_up.png", "player_right.png"]
+    sprite_names = ["player_down.png", "player_left.png", "player_up.png", "player_right.png", "player_down.png"]
     sprites = []
     for sprite in sprite_names:
         sprites.append(factory.from_image(RESOURCES.get_path(sprite)))
@@ -26,7 +26,8 @@ def run():
 
     world = World(window)
 
-    player = Player(world, sprites)
+    player = world.create_player(sprites)
+    enemy = Enemy(world, sprites, AGG)
 
     while running:
 
