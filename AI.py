@@ -6,8 +6,30 @@ from config import *
 from calculations import *
 from projectile import Projectile
 
-
+# 100 TICKS == 33 UNIDADES A 1 U/T
 # player es Player()
+
+def get_dir(pos_1, pos_2):
+    if pos_1.x < pos_2.x:
+        dirx = 1
+    elif pos_1.x > pos_2.x:
+        dirx = -1
+    else:
+        dirx = 0
+
+    if pos_1.y < pos_2.y:
+        diry = 1
+    elif pos_1.y > pos_2.y:
+        diry = -1
+    else:
+        diry = 0
+
+    return dirx, diry
+
+def moveTowards(velocity, dirx, diry):
+    velocity.vx = 1 * dirx
+    velocity.vy = 1 * diry
+
 class AISystem(Applicator):
     def __init__(self):
         super(AISystem, self).__init__()
@@ -18,20 +40,8 @@ class AISystem(Applicator):
 
     def process(self, world, component_sets):
         for ai, position, velocity, sprites in component_sets:
-            if position.x < self.player.position.x:
-                dirx = 1
-            elif position.x > self.player.position.x:
-                dirx = -1
-            else:
-                dirx = 0
-
-            if position.y < self.player.position.y:
-                diry = 1
-            elif position.y > self.player.position.y:
-                diry = -1
-            else:
-                diry = 0
-
+            ai.attack.update(world)
+            dirx, diry = get_dir(position, self.player.position)
             if ai.category == AGG:
                 if distance(position.x, position.y, self.player.position.x, self.player.position.y) > 100:
                     velocity.vx = 1 * dirx
@@ -40,12 +50,7 @@ class AISystem(Applicator):
                     velocity.vx = 0
                     velocity.vy = 0
 
-                    if self.proj is None:
-                        self.tick = SDL_GetTicks()
-                        self.proj = Projectile(world, sprites.copy(), position.x, position.y, 3*dirx, 3*diry)
-                if SDL_GetTicks() >= self.tick + 200 and self.proj is not None:
-                    self.proj.delete()
-                    self.proj = None
+                    ai.attack(world, sprites.copy(), position.x, position.y, dirx*3, diry*3, 20)
 
 
             # Handles Sprites on Entities with AI
@@ -61,7 +66,7 @@ class AISystem(Applicator):
                     sprites.current = sprites.sprites[UP]
 
 
-
 class AI:
-    def __init__(self, category):
+    def __init__(self, category, attack):
         self.category = category
+        self.attack = attack()
