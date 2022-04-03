@@ -5,6 +5,7 @@ from world import World
 from config import *
 from enemy import Enemy
 from controller import ControllerV2
+import os
 
 
 class Game:
@@ -12,7 +13,9 @@ class Game:
         self._setup(title, size or (WIDTH, HEIGHT), resources or "res")
 
     def _setup(self, title, size, resources):
-        self.RES = Resources(__file__, resources)
+        dir_path = os.path.dirname(os.path.realpath(__file__))
+        self.res = os.path.join(dir_path, resources)
+
         ext.init()
 
         self.window = Window(title, size)
@@ -25,19 +28,36 @@ class Game:
         self.player = self.world.create_player(self.sprites["player"])
 
     def _load_sprites(self):
-        self.sprites = {}
-        sprite_names = ["player_down.png", "player_left.png", "player_up.png", "player_right.png", "test_proj.png"]
-        sprites = []
-        for sprite in sprite_names:
-            sprites.append(self.sprite_factory.from_image(self.RES.get_path(sprite)))
-
-        self.sprites["player"] = sprites
-        self.sprites["enemy"] = sprites.copy()
+        self.sprites = {
+            "player": [],
+            "enemies": {
+                "fruity": [],
+                "boss": [],
+                "blueberry": [],
+                "crab": []
+            },
+            "backgrounds": [],
+            "objects": []
+        }
+        for sprite_name in os.listdir(self.res):
+            sprite = self.sprite_factory.from_image(os.path.join(self.res, sprite_name))
+            s = str(sprite_name)
+            if "player" in s:
+                self.sprites['player'].append(sprite)
+            elif "bg" in s:
+                self.sprites["backgrounds"].append(sprite)
+            elif "portal" in s:
+                self.sprites["objects"].append(sprite)
+            else:
+                for k in self.sprites["enemies"].keys():
+                    if k in s:
+                        self.sprites["enemies"][k].append(sprite)
+                        self.sprites["enemies"]["boss"].append(sprite)
 
     def run(self):
         running = True
         self.window.show()
-        Enemy(self.world, self.sprites["enemy"], AGG, 300, 300)
+        Enemy(self.world, self.sprites["enemies"]["boss"], AGG, 300, 300)
         # controller = ControllerV2(self.player)
         while running:
             self.window.refresh()
