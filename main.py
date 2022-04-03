@@ -3,11 +3,12 @@ import sdl2.ext as ext
 from world import World
 from config import *
 from enemy import Enemy
+from game import Game
 
 RESOURCES = ext.Resources(__file__, "res")
+#ext.init()
 
 
-ext.init()
 def load(factory):
     sprite_names = ["player_down.png", "player_left.png", "player_up.png", "player_right.png", "player_down.png"]
     sprites = []
@@ -15,6 +16,7 @@ def load(factory):
         sprites.append(factory.from_image(RESOURCES.get_path(sprite)))
 
     return sprites
+
 
 def run():
     window = ext.Window("Test", size=(WIDTH, HEIGHT))
@@ -56,4 +58,5 @@ def run():
 
 
 if __name__ == "__main__":
-    run()
+    game = Game("test")
+    game.run()

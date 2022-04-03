@@ -1,6 +1,6 @@
 from sdl2 import SDL_Delay
 import sdl2.ext as ext
-from renderer import RendererSystem
+from renderer import Renderer
 from movement import MovementSystem
 from AI import AISystem
 from player import Player
@@ -11,7 +11,7 @@ class World(ext.World):
         super(World, self).__init__()
         self.player = None
 
-        self.renderer = renderer or RendererSystem(window)
+        self.renderer = renderer or Renderer(window)
         self.movement_system = movement_system or MovementSystem()
         self.ai_system = ai_system or AISystem()
 
