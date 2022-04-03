@@ -15,13 +15,13 @@ class World(ext.World):
         self.movement_system = movement_system or MovementSystem()
         self.ai_system = ai_system or AISystem()
 
-        self.add_system(self.renderer)
-        self.add_system(self.movement_system)
         self.add_system(self.ai_system)
+        self.add_system(self.movement_system)
+        self.add_system(self.renderer)
 
     def update(self):
         SDL_Delay(10)
-        self.player.update()
+        # self.player.update()
         self.process()
 
     def create_player(self, sprites):

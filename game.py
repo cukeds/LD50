@@ -1,25 +1,25 @@
 import sdl2 as sdl
 import sdl2.ext as ext
-from sdl2.ext import init, Resources, Window, SpriteFactory
+from sdl2.ext import Resources, Window, SpriteFactory
 from world import World
 from config import *
 from enemy import Enemy
+from controller import ControllerV2
 
 
 class Game:
     def __init__(self, title, size=None, resources=None):
         self._setup(title, size or (WIDTH, HEIGHT), resources or "res")
-        self.running = True
-        self.window.show()
 
     def _setup(self, title, size, resources):
         self.RES = Resources(__file__, resources)
-        init()
+        ext.init()
+
+        self.window = Window(title, size)
 
         self.sprite_factory = SpriteFactory(ext.SOFTWARE)
         self._load_sprites()
 
-        self.window = Window(title, size)
         self.world = World(self.window)
 
         self.player = self.world.create_player(self.sprites["player"])
@@ -35,28 +35,25 @@ class Game:
         self.sprites["enemy"] = sprites.copy()
 
     def run(self):
-        enemy = Enemy(self.world, self.sprites["enemy"], AGG)
-        while self.running:
+        running = True
+        self.window.show()
+        Enemy(self.world, self.sprites["enemy"], AGG)
+        controller = ControllerV2(self.player)
+        while running:
             self.window.refresh()
 
             events = ext.get_events()
             for event in events:
                 if event.type == sdl.SDL_QUIT:
-                    self.running = False
+                    running = False
                 if event.type == sdl.SDL_KEYDOWN:
                     if event.key.keysym.sym == sdl.SDLK_c and event.key.keysym.mod & sdl.KMOD_CTRL:
-                        self.running = False
+                        running = False
                         break
-                    self.player.controller.handle_keydown(event.key)
+                    controller.handle_keydown(event.key)
                 if event.type == sdl.SDL_KEYUP:
-                    self.player.controller.handle_keyup(event.key)
+                    controller.handle_keyup(event.key)
 
-            if self.player.controller.up:
-                self.player.sprites.current = self.sprites["player"][PUP]
-            elif self.player.controller.down:
-                self.player.sprites.current = self.sprites["player"][PDOWN]
-            elif self.player.controller.left:
-                self.player.sprites.current = self.sprites["player"][PLEFT]
-            elif self.player.controller.right:
-                self.player.sprites.current = self.sprites["player"][PRIGHT]
+            controller.update()
+
             self.world.update()

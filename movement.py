@@ -8,6 +8,9 @@ class MovementSystem(Applicator):
 
     def process(self, world, component_sets):
         for position, velocity in component_sets:
+            velocity.vx = min(velocity.vmax, max(-velocity.vmax, velocity.vx))
+            velocity.vy = min(velocity.vmax, max(-velocity.vmax, velocity.vy))
+
             position.x += velocity.vx
             position.y += velocity.vy
 
