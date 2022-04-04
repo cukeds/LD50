@@ -55,8 +55,8 @@ class Game:
                     if k in s:
                         self.sprites["enemies"][k].append(sprite)  # down
                         self.sprites["enemies"][k].append(sprite)  # left
-                        self.sprites["enemies"][k].append(sprite)  # up
                         self.sprites["enemies"][k].append(sprite)  # right
+                        self.sprites["enemies"][k].append(sprite)  # up
                         self.sprites["enemies"][k].append(sprite)  # projectile
                         # just for now
 

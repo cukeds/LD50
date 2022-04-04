@@ -3,15 +3,11 @@ HEIGHT = 720
 
 
 # Sprites for Player
-PDOWN = 0
-PLEFT = 1
-PUP = 2
-PRIGHT = 3
 
-DOWN = 0
+DOWN = 3
 LEFT = 1
 UP = 2
-RIGHT = 3
+RIGHT = 0
 
 # AI Categories
 AGG = 0

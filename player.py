@@ -4,10 +4,6 @@ from config import *
 
 
 class Player(Actor):
-    PDOWN = 0
-    PLEFT = 1
-    PUP = 2
-    PRIGHT = 3
 
     def __init__(self, world, sprites, controller=None):
         super(Player, self).__init__(world, sprites, vmax=2)
@@ -16,7 +12,7 @@ class Player(Actor):
     def update(self):
         self.velocity.vx = 0
         self.velocity.vy = 0
-        index = 0
+        index = DOWN
         if self.controller.right:
             self.velocity.vx = self.velocity.vmax
             index = RIGHT
@@ -37,12 +33,12 @@ class Player(Actor):
 
         index = 0
         if y == -1:
-            index = self.PUP
+            index = self.UP
         elif y == 1:
-            index = self.PDOWN
+            index = self.DOWN
         elif x == 1:
-            index = self.PRIGHT
+            index = self.RIGHT
         elif x == -1:
-            index = self.PLEFT
+            index = self.LEFT
 
         self.sprites.current = self.sprites.sprites[index]

@@ -21,7 +21,6 @@ class World(ext.World):
         self.add_system(self.movement_system)
         self.add_system(self.renderer)
 
-
     @property
     def background(self):
         return self.renderer.background
