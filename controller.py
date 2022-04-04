@@ -55,8 +55,7 @@ class ControllerV2:
         self.y = 0
 
         if 'execute' not in entity.__dir__():
-            raise Exception("'Entity' object must have an 'execute' method that takes X and Y (direction of movement "
-                            "with modulus 1) as arguments.")
+            raise Exception("'Entity' object must have an 'execute' method that takes X and Y (direction of movement) as arguments.")
 
     def handle_keyup(self, event):
         if event.keysym.sym == self._left_key:

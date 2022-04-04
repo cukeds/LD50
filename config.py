@@ -1,5 +1,5 @@
-WIDTH = 800
-HEIGHT = 600
+WIDTH = 1080
+HEIGHT = 720
 
 
 # Sprites for Player

@@ -4,8 +4,10 @@ from sdl2.ext import Resources, Window, SpriteFactory
 from world import World
 from config import *
 from enemy import Enemy
+from portal import Portal
 from controller import ControllerV2
 import os
+import random
 
 
 class Game:
@@ -36,7 +38,7 @@ class Game:
                 "blueberry": [],
                 "crab": []
             },
-            "backgrounds": [],
+            "backgrounds": {},
             "objects": []
         }
         for sprite_name in os.listdir(self.res):
@@ -45,19 +47,23 @@ class Game:
             if "player" in s:
                 self.sprites['player'].append(sprite)
             elif "bg" in s:
-                self.sprites["backgrounds"].append(sprite)
+                self.sprites["backgrounds"][s] = sprite
             elif "portal" in s:
                 self.sprites["objects"].append(sprite)
             else:
                 for k in self.sprites["enemies"].keys():
                     if k in s:
-                        self.sprites["enemies"][k].append(sprite)
-                        self.sprites["enemies"]["boss"].append(sprite)
+                        self.sprites["enemies"][k].append(sprite)  # down
+                        self.sprites["enemies"][k].append(sprite)  # left
+                        self.sprites["enemies"][k].append(sprite)  # up
+                        self.sprites["enemies"][k].append(sprite)  # right
+                        self.sprites["enemies"][k].append(sprite)  # projectile
+                        # just for now
 
     def run(self):
         running = True
         self.window.show()
-        Enemy(self.world, self.sprites["enemies"]["boss"], AGG, 300, 300)
+        self.level_one()
         # controller = ControllerV2(self.player)
         while running:
             self.window.refresh()
@@ -70,10 +76,46 @@ class Game:
                     if event.key.keysym.sym == sdl.SDLK_c and event.key.keysym.mod & sdl.KMOD_CTRL:
                         running = False
                         break
+                    elif event.key.keysym.sym == sdl.SDLK_1:
+                        self.level_one()
+                    elif event.key.keysym.sym == sdl.SDLK_2:
+                        self.level_two()
+                    elif event.key.keysym.sym == sdl.SDLK_3:
+                        self.level_three()
                     self.player.controller.handle_keydown(event.key)
                 if event.type == sdl.SDL_KEYUP:
                     self.player.controller.handle_keyup(event.key)
 
             self.player.update()
-
             self.world.update()
+
+    def level_one(self):
+        self.world.reset()
+        self.world.background = self.sprites["backgrounds"]["river_bridge_bg.png"]
+
+        for i in range(5):
+            x = random.choice(range(WIDTH))
+            y = random.choice(range(HEIGHT))
+            self.world.create_entity(Enemy, self.sprites["enemies"]["crab"], AGG, x, y)
+
+        self.world.create_entity(Portal, self.sprites["objects"], WIDTH//2 - 50, 0)
+
+    def level_two(self):
+        self.world.reset()
+        self.world.background = self.sprites["backgrounds"]["forest_bg.png"]
+
+        for i in range(5):
+            x = random.choice(range(WIDTH))
+            y = random.choice(range(HEIGHT))
+            self.world.create_entity(Enemy, self.sprites["enemies"]["fruity"], AGG, x, y)
+
+        self.world.create_entity(Portal, self.sprites["objects"], WIDTH // 2 - 50, HEIGHT - 50)
+        self.world.create_entity(Portal, self.sprites["objects"], WIDTH // 2 - 50, 0)
+
+    def level_three(self):
+        self.world.reset()
+        self.world.background = self.sprites["backgrounds"]["clock_tower_bg1.png"]
+
+        self.world.create_entity(Enemy, self.sprites["enemies"]["boss"], AGG, WIDTH // 2, HEIGHT // 2)
+
+        self.world.create_entity(Portal, self.sprites["objects"], WIDTH//2 - 50, HEIGHT - 50)
