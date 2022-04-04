@@ -9,6 +9,7 @@ from projectile import Projectile
 # 100 TICKS == 33 UNIDADES A 1 U/T
 # player es Player()
 
+
 def get_dir(pos_1, pos_2):
     if pos_1.x < pos_2.x:
         dirx = 1
@@ -26,9 +27,11 @@ def get_dir(pos_1, pos_2):
 
     return dirx, diry
 
-def moveTowards(velocity, dirx, diry):
+
+def move_towards(velocity, dirx, diry):
     velocity.vx = 1 * dirx
     velocity.vy = 1 * diry
+
 
 class AISystem(Applicator):
     def __init__(self):
@@ -50,7 +53,7 @@ class AISystem(Applicator):
                     velocity.vx = 0
                     velocity.vy = 0
 
-                    ai.attack(world, sprites.copy(), position.x, position.y, dirx*3, diry*3, 20)
+                    ai.attack.execute(world, sprites.copy(), position.x, position.y, dirx*3, diry*3, 20)
 
 
             # Handles Sprites on Entities with AI

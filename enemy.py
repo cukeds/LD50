@@ -15,13 +15,7 @@ class Action:
     def __init__(self):
         pass
 
-    def __call__(self, *args, **kwargs):
-        return self.execute(*args, **kwargs)
-
     def execute(self, world, *args):
-        """
-        Needs to be defined by specific actions
-        """
         raise NotImplementedError()
 
     def update(self, world):
@@ -46,3 +40,14 @@ class Shoot(Action):
             if p.life.lifespan <= 0:
                 p.delete()
                 self.projectiles.remove(p)
+
+
+class Explode(Action):
+    def __init__(self):
+        super(Explode, self).__init__()
+
+    def execute(self, world, *args):
+        pass
+
+    def update(self, world):
+        pass

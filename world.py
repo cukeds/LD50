@@ -21,7 +21,6 @@ class World(ext.World):
         self.add_system(self.movement_system)
         self.add_system(self.renderer)
 
-        self.stuff = []
 
     @property
     def background(self):
@@ -43,13 +42,15 @@ class World(ext.World):
 
     def create_entity(self, creator, *args):
         entity = creator(self, *args)
-        self.stuff.append(entity)
         return entity
 
     def reset(self):
         self.player.position.x = WIDTH // 2 - 50
         self.player.position.y = HEIGHT - 120
-        for s in self.stuff:
-            s.delete()
+        to_delete = []
+        for s in self.entities:
+            if s is not self.player:
+                to_delete.append(s)
 
-        self.stuff = []
+        for s in to_delete:
+            s.delete()
