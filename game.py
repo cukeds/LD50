@@ -33,7 +33,8 @@ class Game:
         self.sprites = {
             "player": [],
             "enemies": {
-                "fruity": [],
+                "fruity1": [],
+                "fruity2": [],
                 "boss": [],
                 "blueberry": [],
                 "crab": []
@@ -53,17 +54,17 @@ class Game:
             else:
                 for k in self.sprites["enemies"].keys():
                     if k in s:
-                        self.sprites["enemies"][k].append(sprite)  # down
-                        self.sprites["enemies"][k].append(sprite)  # left
-                        self.sprites["enemies"][k].append(sprite)  # right
-                        self.sprites["enemies"][k].append(sprite)  # up
-                        self.sprites["enemies"][k].append(sprite)  # projectile
-                        # just for now
+                        self.sprites["enemies"][k].append(sprite)  # Appends sprites!
+
 
     def run(self):
         running = True
         self.window.show()
-        self.level_one()
+        levels = []
+        levels.append(self.level_one)
+        levels.append(self.level_two)
+        levels.append(self.level_three)
+        levels[0]()
         # controller = ControllerV2(self.player)
         while running:
             self.window.refresh()
@@ -77,11 +78,11 @@ class Game:
                         running = False
                         break
                     elif event.key.keysym.sym == sdl.SDLK_1:
-                        self.level_one()
+                        levels[0]()
                     elif event.key.keysym.sym == sdl.SDLK_2:
-                        self.level_two()
+                        levels[1]()
                     elif event.key.keysym.sym == sdl.SDLK_3:
-                        self.level_three()
+                        levels[2]()
                     self.player.controller.handle_keydown(event.key)
                 if event.type == sdl.SDL_KEYUP:
                     self.player.controller.handle_keyup(event.key)
@@ -107,7 +108,8 @@ class Game:
         for i in range(5):
             x = random.choice(range(WIDTH))
             y = random.choice(range(HEIGHT))
-            self.world.create_entity(Enemy, self.sprites["enemies"]["fruity"], AGG, x, y)
+            enemy = random.choice(["fruity1", "fruity2"])
+            self.world.create_entity(Enemy, self.sprites["enemies"][enemy], AGG, x, y)
 
         self.world.create_entity(Portal, self.sprites["objects"], WIDTH // 2 - 50, HEIGHT - 50)
         self.world.create_entity(Portal, self.sprites["objects"], WIDTH // 2 - 50, 0)
