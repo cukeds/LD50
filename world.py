@@ -49,7 +49,7 @@ class World(ext.World):
     def reset(self):
         self.player.position.x = WIDTH // 2 - 50
         self.player.position.y = HEIGHT - 120
-        for enemy in self.stuff:
-            enemy.delete()
+        for s in self.stuff:
+            s.delete()
 
         self.stuff = []
