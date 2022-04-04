@@ -6,6 +6,11 @@ from AI import AISystem
 from player import Player
 from enemy import Enemy
 from config import *
+from collision import CollisionSystem
+
+
+def warn_collider(other):
+    print("player doesnt have a collider")
 
 
 class World(ext.World):
@@ -16,9 +21,11 @@ class World(ext.World):
         self.renderer = renderer or Renderer(window)
         self.movement_system = movement_system or MovementSystem()
         self.ai_system = ai_system or AISystem()
+        self.collision_system = CollisionSystem()
 
         self.add_system(self.ai_system)
         self.add_system(self.movement_system)
+        self.add_system(self.collision_system)
         self.add_system(self.renderer)
 
     @property
@@ -46,6 +53,7 @@ class World(ext.World):
     def reset(self):
         self.player.position.x = WIDTH // 2 - 50
         self.player.position.y = HEIGHT - 120
+        self.player.collider.on_collision = warn_collider
         to_delete = []
         for s in self.entities:
             if s is not self.player:

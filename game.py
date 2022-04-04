@@ -60,10 +60,7 @@ class Game:
     def run(self):
         running = True
         self.window.show()
-        levels = []
-        levels.append(self.level_one)
-        levels.append(self.level_two)
-        levels.append(self.level_three)
+        levels = [self.level_one, self.level_two, self.level_three]
         levels[0]()
         # controller = ControllerV2(self.player)
         while running:
@@ -99,7 +96,15 @@ class Game:
             y = random.choice(range(HEIGHT))
             self.world.create_entity(Enemy, self.sprites["enemies"]["crab"], AGG, x, y)
 
-        self.world.create_entity(Portal, self.sprites["objects"], WIDTH//2 - 50, 0)
+        portal = self.world.create_entity(Portal, self.sprites["objects"], WIDTH//2 - 50, 0)
+
+        def player_collision(other_collider):
+            if portal.collider == other_collider:
+                self.level_two()
+            else:
+                print("player collided")
+
+        self.player.collider.on_collision = player_collision
 
     def level_two(self):
         self.world.reset()
@@ -111,8 +116,16 @@ class Game:
             enemy = random.choice(["fruity1", "fruity2", "blueberry"])
             self.world.create_entity(Enemy, self.sprites["enemies"][enemy], AGG, x, y)
 
-        self.world.create_entity(Portal, self.sprites["objects"], WIDTH // 2 - 50, HEIGHT - 50)
-        self.world.create_entity(Portal, self.sprites["objects"], WIDTH // 2 - 50, 0)
+        potral_back = self.world.create_entity(Portal, self.sprites["objects"], WIDTH // 2 - 50, HEIGHT - 50)
+        portal_next = self.world.create_entity(Portal, self.sprites["objects"], WIDTH // 2 - 50, 0)
+
+        def player_collision(other_collider):
+            if portal_next.collider == other_collider:
+                self.level_three()
+            else:
+                print("player collided")
+
+        self.player.collider.on_collision = player_collision
 
     def level_three(self):
         self.world.reset()

@@ -34,8 +34,12 @@ class Renderer(Applicator):
 
         for position, sprites in sorted_components:
             sprite = sprites.current
+            sprite.x = position.x
+            sprite.y = position.y
+
             r.x = position.x
             r.y = position.y
+
             surface.SDL_BlitSurface(sprite.surface, None, self.surface, r)
         video.SDL_UpdateWindowSurface(self.window.window)
 
