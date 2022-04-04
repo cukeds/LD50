@@ -57,16 +57,17 @@ class AISystem(Applicator):
 
 
             # Handles Sprites on Entities with AI
-            if abs(velocity.vx) > abs(velocity.vy):
-                if velocity.vx >= 0:
-                    sprites.current = sprites.sprites[RIGHT]
-                else:
-                    sprites.current = sprites.sprites[LEFT]
-            else:
+
+            if abs(velocity.vx) < abs(velocity.vy):
                 if velocity.vy >= 0:
                     sprites.current = sprites.sprites[DOWN]
                 else:
                     sprites.current = sprites.sprites[UP]
+            else :
+                if velocity.vx >= 0:
+                    sprites.current = sprites.sprites[RIGHT]
+                else:
+                    sprites.current = sprites.sprites[LEFT]
 
 
 class AI:

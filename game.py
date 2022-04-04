@@ -108,7 +108,7 @@ class Game:
         for i in range(5):
             x = random.choice(range(WIDTH))
             y = random.choice(range(HEIGHT))
-            enemy = random.choice(["fruity1", "fruity2"])
+            enemy = random.choice(["fruity1", "fruity2", "blueberry"])
             self.world.create_entity(Enemy, self.sprites["enemies"][enemy], AGG, x, y)
 
         self.world.create_entity(Portal, self.sprites["objects"], WIDTH // 2 - 50, HEIGHT - 50)
